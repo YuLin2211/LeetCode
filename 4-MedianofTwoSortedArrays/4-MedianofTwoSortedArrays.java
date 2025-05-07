@@ -1,27 +1,31 @@
+// Last updated: 5/7/2025, 9:09:19 PM
 class Solution {
-    public double findMedianSortedArrays(int[] nums1, int[] nums2) {
-        int m = nums1.length, n = nums2.length;
-        int[] merged = new int[m + n];
-        int i = 0, j = 0, k = 0;
-        while (i < m && j < n) {
-            if (nums1[i] <= nums2[j]) {
-                merged[k++] = nums1[i++];
-            } else {
-                merged[k++] = nums2[j++];
+    public String longestPalindrome(String s) {
+        if (s == null || s.length() < 1){
+            return "";
+        }
+
+        int start = 0, end = 0;
+
+        for (int i = 0; i < s.length(); i++) {
+            int len1 = expandAroundCenter(s, i, i);
+            int len2 = expandAroundCenter(s, i, i + 1);
+            int len = Math.max(len1, len2);
+
+            if (len > end - start) {
+                start = i - (len - 1) / 2;
+                end = i + len / 2;
             }
         }
-        while (i < m) {
-            merged[k++] = nums1[i++];
+
+        return s.substring(start, end + 1);
+    }
+
+    private int expandAroundCenter(String s, int left, int right) {
+        while (left >= 0 && right < s.length() && s.charAt(left) == s.charAt(right)) {
+            left--;
+            right++;
         }
-        while (j < n) {
-            merged[k++] = nums2[j++];
-        }
-        
-        int total = m + n;
-        if (total % 2 == 1) { 
-            return merged[total / 2];
-        } else { 
-            return (merged[total / 2 - 1] + merged[total / 2]) / 2.0;
-        }
+        return right - left - 1;
     }
 }
