@@ -1,29 +1,22 @@
-// Last updated: 5/19/2025, 6:03:09 PM
-public class Solution {
-    public String convert(String s, int numRows) {
-        if (numRows == 1 || s.length() <= numRows) return s;
+// Last updated: 5/19/2025, 6:03:24 PM
+class Solution {
+    public int reverse(int x) {
+        int rev = 0;
 
-        StringBuilder[] rows = new StringBuilder[numRows];
-        for (int i = 0; i < numRows; i++) {
-            rows[i] = new StringBuilder();
-        }
+        while(x != 0){
+            int pop = x % 10;
+            x /= 10;
 
-        int currRow = 0;
-        boolean goingDown = false;
-
-        for (char c : s.toCharArray()) {
-            rows[currRow].append(c);
-            if (currRow == 0 || currRow == numRows - 1) {
-                goingDown = !goingDown;
+            if (rev > Integer.MAX_VALUE / 10 || (rev == Integer.MAX_VALUE / 10 && pop > 7)) {
+                return 0; // overflow
+            }
+            if (rev < Integer.MIN_VALUE / 10 || (rev == Integer.MIN_VALUE / 10 && pop < -8)) {
+                return 0; // underflow
             }
 
-            currRow += goingDown ? 1 : -1;
-        }
-        StringBuilder result = new StringBuilder();
-        for (StringBuilder row : rows) {
-            result.append(row);
+            rev = rev * 10 + pop;
         }
 
-        return result.toString();
+        return rev;
     }
 }
