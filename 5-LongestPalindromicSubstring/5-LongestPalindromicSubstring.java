@@ -1,40 +1,33 @@
-// Last updated: 5/19/2025, 6:04:17 PM
+// Last updated: 5/19/2025, 6:05:36 PM
 class Solution {
-    public int myAtoi(String s) {
-        if(s == null || s.isEmpty()){
-            return 0;
-        }
-
-        int i = 0;
+    public String longestPalindrome(String s) {
         int n = s.length();
-        int sign = 1;
-        int result = 0;
+        if (n < 2) return s;
 
-        while(i < n && s.charAt(i) == ' '){
-            i++;
+        boolean[][] dp = new boolean[n][n];
+        int start = 0, maxLen = 1;
+
+        for (int i = 0; i < n; i++) {
+            dp[i][i] = true;
         }
 
-        if(i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')){
-            if(s.charAt(i) == '+'){
-                sign = 1;
+        for (int len = 2; len <= n; len++) {
+            for (int i = 0; i <= n - len; i++) {
+                int j = i + len - 1;
+
+                if (s.charAt(i) == s.charAt(j)) {
+                    if (len == 2 || dp[i + 1][j - 1]) {
+                        dp[i][j] = true;
+
+                        if (len > maxLen) {
+                            start = i;
+                            maxLen = len;
+                        }
+                    }
+                }
             }
-            else if(s.charAt(i) == '-'){
-                sign = -1;
-            }
-            i++;
         }
 
-        while(i < n && Character.isDigit(s.charAt(i))){
-            int digit = s.charAt(i) - '0';
-
-            if (result > (Integer.MAX_VALUE - digit) / 10) {
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
-            }
-
-            result = result * 10 + digit;
-            i++;
-        }
-
-        return result * sign;
+        return s.substring(start, start + maxLen);
     }
 }
