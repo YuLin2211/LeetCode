@@ -1,40 +1,29 @@
-// Last updated: 5/19/2025, 4:40:05 PM
-class Solution {
-    public int myAtoi(String s) {
-        if(s == null || s.isEmpty()){
-            return 0;
+// Last updated: 5/19/2025, 6:03:09 PM
+public class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows == 1 || s.length() <= numRows) return s;
+
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
         }
 
-        int i = 0;
-        int n = s.length();
-        int sign = 1;
-        int result = 0;
+        int currRow = 0;
+        boolean goingDown = false;
 
-        while(i < n && s.charAt(i) == ' '){
-            i++;
-        }
-
-        if(i < n && (s.charAt(i) == '+' || s.charAt(i) == '-')){
-            if(s.charAt(i) == '+'){
-                sign = 1;
-            }
-            else if(s.charAt(i) == '-'){
-                sign = -1;
-            }
-            i++;
-        }
-
-        while(i < n && Character.isDigit(s.charAt(i))){
-            int digit = s.charAt(i) - '0';
-
-            if (result > (Integer.MAX_VALUE - digit) / 10) {
-                return sign == 1 ? Integer.MAX_VALUE : Integer.MIN_VALUE;
+        for (char c : s.toCharArray()) {
+            rows[currRow].append(c);
+            if (currRow == 0 || currRow == numRows - 1) {
+                goingDown = !goingDown;
             }
 
-            result = result * 10 + digit;
-            i++;
+            currRow += goingDown ? 1 : -1;
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
         }
 
-        return result * sign;
+        return result.toString();
     }
 }
