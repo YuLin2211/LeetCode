@@ -1,33 +1,29 @@
-// Last updated: 5/19/2025, 3:25:02 PM
-class Solution {
-    public String longestPalindrome(String s) {
-        int n = s.length();
-        if (n < 2) return s;
+// Last updated: 5/19/2025, 3:27:20 PM
+public class Solution {
+    public String convert(String s, int numRows) {
+        if (numRows == 1 || s.length() <= numRows) return s;
 
-        boolean[][] dp = new boolean[n][n];
-        int start = 0, maxLen = 1;
-
-        for (int i = 0; i < n; i++) {
-            dp[i][i] = true;
+        StringBuilder[] rows = new StringBuilder[numRows];
+        for (int i = 0; i < numRows; i++) {
+            rows[i] = new StringBuilder();
         }
 
-        for (int len = 2; len <= n; len++) {
-            for (int i = 0; i <= n - len; i++) {
-                int j = i + len - 1;
+        int currRow = 0;
+        boolean goingDown = false;
 
-                if (s.charAt(i) == s.charAt(j)) {
-                    if (len == 2 || dp[i + 1][j - 1]) {
-                        dp[i][j] = true;
-
-                        if (len > maxLen) {
-                            start = i;
-                            maxLen = len;
-                        }
-                    }
-                }
+        for (char c : s.toCharArray()) {
+            rows[currRow].append(c);
+            if (currRow == 0 || currRow == numRows - 1) {
+                goingDown = !goingDown;
             }
+
+            currRow += goingDown ? 1 : -1;
+        }
+        StringBuilder result = new StringBuilder();
+        for (StringBuilder row : rows) {
+            result.append(row);
         }
 
-        return s.substring(start, start + maxLen);
+        return result.toString();
     }
 }
