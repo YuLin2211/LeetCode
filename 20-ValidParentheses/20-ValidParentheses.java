@@ -1,35 +1,29 @@
-// Last updated: 6/2/2025, 11:02:09 PM
+// Last updated: 6/2/2025, 11:33:34 PM
 /**
- * Definition for singly-linked list.
- * public class ListNode {
+ * Definition for a binary tree node.
+ * public class TreeNode {
  *     int val;
- *     ListNode next;
- *     ListNode() {}
- *     ListNode(int val) { this.val = val; }
- *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
  * }
  */
 class Solution {
-    public ListNode mergeTwoLists(ListNode list1, ListNode list2) {
-        ListNode newLN = new ListNode();
-        ListNode current = newLN;
-        while(list1 != null && list2 != null){
-            if(list1.val > list2.val){
-                current.next = list2;
-                list2 = list2.next;
-            }
-            else{
-                current.next = list1;
-                list1 = list1.next;
-            }
-            current = current.next;
+    public TreeNode invertTree(TreeNode root) {
+        if(root == null){
+            return null;
         }
-        if(list1 != null){
-            current.next = list1;
-        }
-        else{
-            current.next = list2;
-        }
-        return newLN.next;
+
+        TreeNode temp = root.left;
+        root.left = invertTree(root.right);
+        root.right = invertTree(temp);
+
+        return root;
     }
-} 
+}
