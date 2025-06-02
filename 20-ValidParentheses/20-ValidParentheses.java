@@ -1,21 +1,13 @@
-// Last updated: 6/2/2025, 11:57:17 PM
+// Last updated: 6/3/2025, 12:01:45 AM
 class Solution {
-    public boolean isAnagram(String s, String t) {
-        if (s.length() != t.length()) {
-            return false;
-        }
-
-        int[] count = new int[26];
-        for (int i = 0; i < s.length(); i++) {
-            count[s.charAt(i) - 'a']++;
-            count[t.charAt(i) - 'a']--;
-        }
-        for (int c : count) {
-            if (c != 0) {
-                return false;
+    public int search(int[] nums, int target) {
+        int index = -1;
+        for(int i = 0; i < nums.length; i++){
+            if(nums[i] == target){
+                index = i;
+                break;
             }
         }
-
-        return true;
+        return index;
     }
 }
