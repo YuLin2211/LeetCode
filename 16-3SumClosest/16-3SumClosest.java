@@ -1,29 +1,34 @@
-// Last updated: 9/10/2025, 12:52:14 AM
+// Last updated: 9/10/2025, 1:13:30 AM
 class Solution {
-    public int threeSumClosest(int[] nums, int target) {
-        Arrays.sort(nums);
-        int n = nums.length;
+    public List<String> letterCombinations(String digits) {
+        if (digits == null || digits.isEmpty()) return new ArrayList<>();
 
-        int closest = nums[0] + nums[1] + nums[2];
-        for (int i = 0; i < n - 2; i++) {
-            int left = i + 1, right = n - 1;
+        String[] map = {
+            "",     // 0
+            "",     // 1
+            "abc",  // 2
+            "def",  // 3
+            "ghi",  // 4
+            "jkl",  // 5
+            "mno",  // 6
+            "pqrs", // 7
+            "tuv",  // 8
+            "wxyz"  // 9
+        };
 
-            while (left < right) {
-                int sum = nums[i] + nums[left] + nums[right];
+        List<String> res = new ArrayList<>();
+        res.add("");
 
-                if (Math.abs(sum - target) < Math.abs(closest - target)) {
-                    closest = sum;
-                }
-
-                if (sum < target) {
-                    left++;
-                } else if (sum > target) {
-                    right--;
-                } else {
-                    return sum;
+        for (int i = 0; i < digits.length(); i++) {
+            String letters = map[digits.charAt(i) - '0'];
+            List<String> next = new ArrayList<>(res.size() * letters.length());
+            for (String prefix : res) {
+                for (int j = 0; j < letters.length(); j++) {
+                    next.add(prefix + letters.charAt(j));
                 }
             }
+            res = next;
         }
-        return closest;
+        return res;
     }
 }
