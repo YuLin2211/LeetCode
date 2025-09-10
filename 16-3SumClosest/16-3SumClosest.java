@@ -1,34 +1,30 @@
-// Last updated: 9/10/2025, 1:13:30 AM
+// Last updated: 9/10/2025, 1:31:16 AM
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode() {}
+ *     ListNode(int val) { this.val = val; }
+ *     ListNode(int val, ListNode next) { this.val = val; this.next = next; }
+ * }
+ */
 class Solution {
-    public List<String> letterCombinations(String digits) {
-        if (digits == null || digits.isEmpty()) return new ArrayList<>();
-
-        String[] map = {
-            "",     // 0
-            "",     // 1
-            "abc",  // 2
-            "def",  // 3
-            "ghi",  // 4
-            "jkl",  // 5
-            "mno",  // 6
-            "pqrs", // 7
-            "tuv",  // 8
-            "wxyz"  // 9
-        };
-
-        List<String> res = new ArrayList<>();
-        res.add("");
-
-        for (int i = 0; i < digits.length(); i++) {
-            String letters = map[digits.charAt(i) - '0'];
-            List<String> next = new ArrayList<>(res.size() * letters.length());
-            for (String prefix : res) {
-                for (int j = 0; j < letters.length(); j++) {
-                    next.add(prefix + letters.charAt(j));
-                }
-            }
-            res = next;
+    public ListNode removeNthFromEnd(ListNode head, int n) {
+        ListNode fast = head, slow = head;
+        for (int i = 0; i < n; i++) {
+            fast = fast.next;
         }
-        return res;
+        if (fast == null) {
+            return head.next;
+        }
+
+        while (fast.next != null) {
+            fast = fast.next;
+            slow = slow.next;
+        }
+        slow.next = slow.next.next;
+
+        return head;
     }
 }
