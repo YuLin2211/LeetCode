@@ -1,23 +1,13 @@
-// Last updated: 9/15/2025, 8:38:06 PM
+// Last updated: 9/15/2025, 8:47:28 PM
 class Solution {
-    public int characterReplacement(String s, int k) {
-        int[] freq = new int[26];
-        int left = 0;
-        int maxCount = 0;
-        int best = 0;
-
-        for (int right = 0; right < s.length(); right++) {
-            int i = s.charAt(right) - 'A';
-            freq[i]++;
-            maxCount = Math.max(maxCount, freq[i]);
-
-            while (right - left + 1 - maxCount > k) {
-                freq[s.charAt(left) - 'A']--;
-                left++;
-            }
-
-            best = Math.max(best, right - left + 1);
+    public boolean containsDuplicate(int[] nums) {
+        HashMap<Integer, Integer> counted = new HashMap<>();
+        for (int i = 0; i < nums.length; i++) {
+            int val = nums[i];
+            if (counted.containsKey(val) && counted.get(val) >= 1)
+                return true;
+            counted.put(val, counted.getOrDefault(val, 0) + 1);
         }
-        return best;
+        return false;
     }
 }
