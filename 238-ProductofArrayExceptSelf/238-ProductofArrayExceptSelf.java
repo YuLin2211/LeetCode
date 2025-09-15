@@ -1,13 +1,20 @@
-// Last updated: 9/15/2025, 8:47:28 PM
+// Last updated: 9/15/2025, 11:08:59 PM
 class Solution {
-    public boolean containsDuplicate(int[] nums) {
-        HashMap<Integer, Integer> counted = new HashMap<>();
-        for (int i = 0; i < nums.length; i++) {
-            int val = nums[i];
-            if (counted.containsKey(val) && counted.get(val) >= 1)
-                return true;
-            counted.put(val, counted.getOrDefault(val, 0) + 1);
-        }
-        return false;
+    public List<List<String>> groupAnagrams(String[] strs) {
+            Map<String, List<String>> groupedAnagrams = new HashMap<>();
+
+            for(int i = 0; i < strs.length; i++){
+                String word = strs[i];
+                char[] chars = word.toCharArray();
+                Arrays.sort(chars);
+                String sortedChar = new String(chars);
+
+                if(!groupedAnagrams.containsKey(sortedChar)){
+                    groupedAnagrams.put(sortedChar, new ArrayList<>());
+                }
+                groupedAnagrams.get(sortedChar).add(word);
+            }
+            return new ArrayList<>(groupedAnagrams.values());
+
     }
 }
