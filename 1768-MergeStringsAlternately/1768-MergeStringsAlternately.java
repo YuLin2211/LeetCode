@@ -1,20 +1,19 @@
-// Last updated: 9/15/2025, 11:58:28 PM
+// Last updated: 9/15/2025, 11:58:47 PM
 class Solution {
-    public List<Boolean> kidsWithCandies(int[] candies, int extraCandies) {
-        List<Boolean> result = new ArrayList<>(candies.length);
-        int maxCandies = 0;
-        for (int candy : candies) {
-            maxCandies = Math.max(maxCandies, candy);
+    public String gcdOfStrings(String str1, String str2) {
+        if (!(str1 + str2).equals(str2 + str1)) {
+            return "";
         }
+        int lenGCD = gcd(str1.length(), str2.length());
+        return str1.substring(0, lenGCD);        
+    }
 
-        for (int candy : candies) {
-            if (candy + extraCandies >= maxCandies) {
-                result.add(true);
-            } else {
-                result.add(false);
-            }
+    private int gcd(int len1, int len2) {
+        while (len2 != 0) {
+            int temp = len1 % len2;
+            len1 = len2;
+            len2 = temp;
         }
-        
-        return result;
+        return len1;
     }
 }
