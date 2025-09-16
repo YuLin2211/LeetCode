@@ -1,4 +1,4 @@
-// Last updated: 9/17/2025, 12:41:46 AM
+// Last updated: 9/17/2025, 12:42:37 AM
 class Solution {
     public String reverseVowels(String s) {
         char[] seperatedS = s.toCharArray();
@@ -18,7 +18,6 @@ class Solution {
     }
 
     private boolean isVowel(char c) {
-        // covers both lowercase and uppercase
         return c == 'a' || c == 'e' || c == 'i' || c == 'o' || c == 'u' ||
                c == 'A' || c == 'E' || c == 'I' || c == 'O' || c == 'U';
     }
