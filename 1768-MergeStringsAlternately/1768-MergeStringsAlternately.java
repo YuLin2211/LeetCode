@@ -1,19 +1,15 @@
-// Last updated: 9/15/2025, 11:58:47 PM
+// Last updated: 9/17/2025, 12:28:38 AM
 class Solution {
-    public String gcdOfStrings(String str1, String str2) {
-        if (!(str1 + str2).equals(str2 + str1)) {
-            return "";
+    public boolean canPlaceFlowers(int[] flowerbed, int n) {
+        for(int i = 0; i < flowerbed.length && n > 0; i++){
+            if (flowerbed[i] == 0 && (i == 0 || flowerbed[i-1] == 0) && (i == flowerbed.length-1 || flowerbed[i+1] == 0)) {
+                flowerbed[i] = 1;
+                n--;
+                if (n == 0) {
+                    return true;
+                }
+            }
         }
-        int lenGCD = gcd(str1.length(), str2.length());
-        return str1.substring(0, lenGCD);        
-    }
-
-    private int gcd(int len1, int len2) {
-        while (len2 != 0) {
-            int temp = len1 % len2;
-            len1 = len2;
-            len2 = temp;
-        }
-        return len1;
+        return n == 0;
     }
 }
