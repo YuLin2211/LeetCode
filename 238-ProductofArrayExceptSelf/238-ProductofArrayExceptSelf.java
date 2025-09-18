@@ -1,26 +1,19 @@
-// Last updated: 9/18/2025, 3:04:05 AM
+// Last updated: 9/18/2025, 3:09:37 AM
 class Solution {
-    public int maxOperations(int[] nums, int k) {
-        Arrays.sort(nums);
-        int count = 0;
-        int left = 0;
-        int right = nums.length - 1;
+    public double findMaxAverage(int[] nums, int k) {
+        double max = 0;
+        double sum = 0;
 
-        while(left < right){
-            int sum = nums[left] + nums[right];
-
-            if(sum == k){
-                count++;
-                left++;
-                right--;
-            }
-            else if (sum > k){
-                right--;
-            }
-            else {
-                left++;
-            }
+        for(int i = 0; i < k; i++){
+            sum += nums[i];
         }
-        return count;
+        max = sum;
+
+        for (int i = k; i < nums.length; i++) {
+            sum += nums[i] - nums[i - k];
+            max = Math.max(max, sum);
+        }
+
+        return max/k;
     }
 }
