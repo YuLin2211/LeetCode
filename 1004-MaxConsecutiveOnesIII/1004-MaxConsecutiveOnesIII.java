@@ -1,19 +1,14 @@
-// Last updated: 9/18/2025, 1:27:58 PM
+// Last updated: 9/18/2025, 1:42:39 PM
 class Solution {
-    public int longestSubarray(int[] nums) {
-        int left = 0;
-        int zeros = 0; 
-        int max = 0;
-
-        for (int right = 0; right < nums.length; right++) {
-            if (nums[right] == 0) zeros++;
-
-            while (zeros > 1) {
-                if (nums[left] == 0) zeros--;
-                left++;
+    public int largestAltitude(int[] gain) {
+        int highestPoint = 0;
+        int current = 0;
+        for(int i = 0; i < gain.length; i++){
+            current += gain[i];
+            if(current > highestPoint){
+                highestPoint = current;
             }
-            max = Math.max(max, right - left);
         }
-        return max;
+        return highestPoint;
     }
 }
