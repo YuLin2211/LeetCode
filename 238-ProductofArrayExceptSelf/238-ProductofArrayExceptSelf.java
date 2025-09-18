@@ -1,19 +1,20 @@
-// Last updated: 9/18/2025, 2:49:33 AM
+// Last updated: 9/18/2025, 2:58:00 AM
 class Solution {
-    public boolean isSubsequence(String s, String t) {
-        if (s.length() == 0){
-            return true;
-        }
-        char[] array = t.toCharArray();
-        int current = 0;
-        for(int i = 0; i < array.length; i ++){
-            if (array[i] == s.charAt(current)) {
-                current++;
-                if (current == s.length()) {
-                    return true;
-                }
+    public int maxArea(int[] height) {
+        int maxArea = 0;
+        int left = 0;
+        int right = height.length - 1;
+
+        while (left < right){
+            maxArea = Math.max(maxArea, (right - left) * Math.min(height[left], height[right]));
+
+            if (height[left] < height[right]){
+                left++;
+            }
+            else {
+                right --;
             }
         }
-        return current == s.length();
+        return maxArea;
     }
 }
