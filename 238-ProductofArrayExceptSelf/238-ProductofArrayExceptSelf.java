@@ -1,22 +1,19 @@
-// Last updated: 9/18/2025, 1:25:46 AM
+// Last updated: 9/18/2025, 2:07:35 AM
 class Solution {
-    public int compress(char[] chars) {
-        int write = 0;
-        for(int i = 0; i < chars.length;){
-            char c = chars[i];
-            int j = i;
-            while (j < chars.length && chars[j] == c) j++;
-            int count = j - i;
+    public int[] productExceptSelf(int[] nums) {
+        int n = nums.length;
+        int[] ans = new int[n];
 
-            chars[write++] = c;
-            if (count > 1) {
-                String s = Integer.toString(count);
-                for (int k = 0; k < s.length(); k++){
-                    chars[write++] = s.charAt(k);
-                }
-            }
-            i = j;
+        ans[0] = 1;
+        for (int i = 1; i < n; i++) {
+            ans[i] = ans[i - 1] * nums[i - 1];
         }
-        return write;
+
+        int right = 1;
+        for (int i = n - 1; i >= 0; i--) {
+            ans[i] *= right;
+            right *= nums[i];
+        }
+        return ans;
     }
 }
