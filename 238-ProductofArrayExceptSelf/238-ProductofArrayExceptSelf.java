@@ -1,20 +1,26 @@
-// Last updated: 9/18/2025, 2:58:00 AM
+// Last updated: 9/18/2025, 3:04:05 AM
 class Solution {
-    public int maxArea(int[] height) {
-        int maxArea = 0;
+    public int maxOperations(int[] nums, int k) {
+        Arrays.sort(nums);
+        int count = 0;
         int left = 0;
-        int right = height.length - 1;
+        int right = nums.length - 1;
 
-        while (left < right){
-            maxArea = Math.max(maxArea, (right - left) * Math.min(height[left], height[right]));
+        while(left < right){
+            int sum = nums[left] + nums[right];
 
-            if (height[left] < height[right]){
+            if(sum == k){
+                count++;
                 left++;
+                right--;
+            }
+            else if (sum > k){
+                right--;
             }
             else {
-                right --;
+                left++;
             }
         }
-        return maxArea;
+        return count;
     }
 }
