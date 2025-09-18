@@ -1,15 +1,32 @@
-// Last updated: 9/18/2025, 2:12:19 PM
+// Last updated: 9/18/2025, 2:46:42 PM
 class Solution {
-    public boolean uniqueOccurrences(int[] arr) {
-        Map<Integer, Integer> freq = new HashMap<>();
-        for(int x : arr){
-            freq.put(x, freq.getOrDefault(x, 0) + 1);
+    public boolean closeStrings(String word1, String word2) {
+        int[] freq1 = new int[26];
+        int[] freq2 = new int[26];
+
+        for (char ch : word1.toCharArray()) {
+            freq1[ch - 'a']++;
         }
 
-        Set<Integer> seen = new HashSet<>();
-        for(int f : freq.values()){
-            if(!seen.add(f)) return false;
+        for (char ch : word2.toCharArray()) {
+            freq2[ch - 'a']++;
         }
+
+        for (int i = 0; i < 26; i++) {
+            if ((freq1[i] == 0 && freq2[i] != 0) || (freq1[i] != 0 && freq2[i] == 0)) {
+                return false;
+            }
+        }
+
+        Arrays.sort(freq1);
+        Arrays.sort(freq2);
+
+        for (int i = 0; i < 26; i++) {
+            if (freq1[i] != freq2[i]) {
+                return false;
+            }
+        }
+
         return true;
     }
 }
