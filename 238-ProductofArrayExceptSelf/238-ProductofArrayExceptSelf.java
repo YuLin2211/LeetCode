@@ -1,4 +1,4 @@
-// Last updated: 9/18/2025, 3:22:45 AM
+// Last updated: 9/18/2025, 3:23:09 AM
 class Solution {
     public int maxVowels(String s, int k) {
         char[] c = s.toCharArray();
