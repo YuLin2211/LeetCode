@@ -1,19 +1,22 @@
-// Last updated: 9/17/2025, 11:57:12 PM
+// Last updated: 9/18/2025, 1:25:46 AM
 class Solution {
-    public boolean increasingTriplet(int[] nums) {
-        int a = Integer.MAX_VALUE;
-        int b = Integer.MAX_VALUE;
+    public int compress(char[] chars) {
+        int write = 0;
+        for(int i = 0; i < chars.length;){
+            char c = chars[i];
+            int j = i;
+            while (j < chars.length && chars[j] == c) j++;
+            int count = j - i;
 
-        for(int i = 0; i < nums.length; i++){
-            int temp = nums[i];
-            if(temp <= a){
-                a = temp;
-            } else if (temp <= b){
-                b = temp;
-            } else {
-                return true;
+            chars[write++] = c;
+            if (count > 1) {
+                String s = Integer.toString(count);
+                for (int k = 0; k < s.length(); k++){
+                    chars[write++] = s.charAt(k);
+                }
             }
+            i = j;
         }
-        return false;
+        return write;
     }
 }
