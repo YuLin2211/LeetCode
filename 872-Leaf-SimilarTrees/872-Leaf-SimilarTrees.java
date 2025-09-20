@@ -1,4 +1,4 @@
-// Last updated: 9/20/2025, 10:50:56 PM
+// Last updated: 9/20/2025, 11:21:21 PM
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -15,24 +15,26 @@
  * }
  */
 class Solution {
-    int maxValue = Integer.MIN_VALUE;
-    int count = 0;
-    public int goodNodes(TreeNode root) {
-        comparisionNodes(root);
-        return count;
+    public int pathSum(TreeNode root, int targetSum) {
+        return helper(root, targetSum, false);
     }
-
-    private void comparisionNodes(TreeNode root){
-        if (root == null) {
-            return;
+    private int helper(TreeNode node, long target, boolean inPath) {
+        if(node == null){
+            return 0;
         }
-        int oldMax = maxValue;
-        maxValue = Math.max(maxValue, root.val);
-        if(root.val == maxValue){
-            count++;
+        int res = 0;
+        if (inPath) {
+            if (node.val == target) res++;
+            res += helper(node.left, target - node.val, true);
+            res += helper(node.right, target - node.val, true);
+        } else {
+            int startHere = (node.val == target ? 1 : 0)
+                    + helper(node.left, target - node.val, true)
+                    + helper(node.right, target - node.val, true);
+            int skipHere = helper(node.left, target, false)
+                    + helper(node.right, target, false);
+            res = startHere + skipHere;
         }
-        comparisionNodes(root.left);
-        comparisionNodes(root.right);
-        maxValue = oldMax;
+        return res;
     }
 }
