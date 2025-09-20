@@ -1,4 +1,4 @@
-// Last updated: 9/20/2025, 12:39:35 AM
+// Last updated: 9/20/2025, 8:06:22 PM
 /**
  * Definition for singly-linked list.
  * public class ListNode {
@@ -10,20 +10,26 @@
  * }
  */
 class Solution {
-    public ListNode oddEvenList(ListNode head) {
-        if (head == null || head.next == null){
-            return head;
+    public int pairSum(ListNode head) {
+        int ans = 0;
+        ListNode newList = null;
+        ListNode current = head;
+        ListNode currHalf = head;
+        
+        while (currHalf != null && currHalf.next != null) {
+            currHalf = currHalf.next.next;
+            ListNode temp = current.next;
+            current.next = newList;
+            newList = current;
+            current = temp;
         }
-        ListNode odd = head;
-        ListNode even = head.next;
-        ListNode evenStart = head.next;
-        while (even != null && even.next != null) {
-            odd.next = even.next;
-            even.next = odd.next.next;
-            odd = odd.next;
-            even = even.next;
+
+        while (current != null) {
+            ans = Math.max(ans, current.val + newList.val);
+            current = current.next;
+            newList = newList.next;
         }
-        odd.next = evenStart;
-        return head;
+        
+        return ans;
     }
 }
