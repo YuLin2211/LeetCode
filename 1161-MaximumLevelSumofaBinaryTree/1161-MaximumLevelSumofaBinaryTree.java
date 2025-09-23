@@ -1,4 +1,4 @@
-// Last updated: 9/23/2025, 2:29:03 AM
+// Last updated: 9/23/2025, 2:40:19 AM
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -15,28 +15,23 @@
  * }
  */
 class Solution {
-    public TreeNode searchBST(TreeNode root, int val) {
-        Deque<TreeNode> q = new ArrayDeque<>();
-        if(root == null){
-            return null;
-        }
-        q.add(root);
+    public TreeNode deleteNode(TreeNode root, int key) {
+        if (root == null) return null;
 
-        while (!q.isEmpty()) {
-            int n = q.size();
-            for (int i = 0; i < n; i++) {
-                TreeNode node = q.poll();
-                if(node.val == val){
-                   return node; 
-                }
-                if(node.left != null){
-                    q.add(node.left);
-                }
-                if(node.right != null){
-                    q.add(node.right);
-                }
-            }
+        if (key < root.val) {
+            root.left = deleteNode(root.left, key);
+            return root;
         }
-        return null;
+        if (key > root.val) {
+            root.right = deleteNode(root.right, key);
+            return root;
+        }
+        if (root.left == null)  return root.right;
+        if (root.right == null) return root.left;
+
+        TreeNode rmost = root.left;
+        while (rmost.right != null) rmost = rmost.right;
+        rmost.right = root.right;
+        return root.left;
     }
 }
