@@ -1,4 +1,4 @@
-// Last updated: 9/23/2025, 2:14:53 AM
+// Last updated: 9/23/2025, 2:29:03 AM
 /**
  * Definition for a binary tree node.
  * public class TreeNode {
@@ -15,19 +15,20 @@
  * }
  */
 class Solution {
-    public int maxLevelSum(TreeNode root) {
+    public TreeNode searchBST(TreeNode root, int val) {
         Deque<TreeNode> q = new ArrayDeque<>();
-        if (root == null) return 0;
+        if(root == null){
+            return null;
+        }
         q.add(root);
-        int bestLevel = 1;
-        int level = 1;
-        int maxSum = Integer.MIN_VALUE;
+
         while (!q.isEmpty()) {
             int n = q.size();
-            int sum = 0;
             for (int i = 0; i < n; i++) {
                 TreeNode node = q.poll();
-                sum += node.val;
+                if(node.val == val){
+                   return node; 
+                }
                 if(node.left != null){
                     q.add(node.left);
                 }
@@ -35,12 +36,7 @@ class Solution {
                     q.add(node.right);
                 }
             }
-            if (sum > maxSum) {
-                maxSum = sum;
-                bestLevel = level;
-            }
-            level++;
         }
-        return bestLevel;
+        return null;
     }
 }
